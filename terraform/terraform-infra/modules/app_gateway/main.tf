@@ -1,7 +1,7 @@
-resource "aws_elb" "bar" {
-  name               = "app-gateway"
+resource "aws_elb" "app_gateway" {
+  name               = var.app-gateway_name
   availability_zones = ["us-west-2c"]
-   subnets            = [module.network.app_gateway_subnet_id]
+  subnets            = var.app-gateway_subnet
 
   access_logs {
     bucket        = "foo"
@@ -34,8 +34,8 @@ resource "aws_elb" "bar" {
 }
 
 resource "aws_wafv2_web_acl_association" "web_acl_association_my_lb" {
-  resource_arn = aws_lb.my_lb.arn
-  web_acl_arn  = aws_wafv2_web_acl.my_web_acl.arn
+  resource_arn = aws_elb.app_gateway.arn
+  web_acl_arn  = aws_wafv2_web_acl.waf_app_gateway.arn
 }
 
 
