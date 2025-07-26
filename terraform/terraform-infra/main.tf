@@ -15,7 +15,7 @@ provider "aws" {
 */
 
 
-module "network" {
+module "network_app_gateway" {
   source = "./modules/network"
 }
 
